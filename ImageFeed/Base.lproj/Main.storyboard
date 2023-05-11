@@ -23,6 +23,55 @@
                                 <color key="tintColor" name="ypBlack"/>
                                 <color key="separatorColor" name="ypBlack"/>
                                 <color key="sectionIndexBackgroundColor" name="ypBlack"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="275" id="M69-DS-u2I" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="275"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="M69-DS-u2I" id="lFt-YU-t0p">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="275"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="G6N-Qv-gGQ">
+                                                    <rect key="frame" x="16" y="4" width="361" height="267"/>
+                                                    <color key="backgroundColor" name="ypBlack"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lPR-hd-pCI" userLabel="LikeButton">
+                                                    <rect key="frame" x="335" y="4" width="42" height="42"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="like"/>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Марта 2023 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUK-OI-vfQ" userLabel="DateLabel">
+                                                    <rect key="frame" x="24" y="247" width="96" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" name="ypWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" name="ypBlack"/>
+                                            <constraints>
+                                                <constraint firstItem="G6N-Qv-gGQ" firstAttribute="bottom" secondItem="DUK-OI-vfQ" secondAttribute="bottom" constant="8" id="7aX-wj-c4G"/>
+                                                <constraint firstItem="G6N-Qv-gGQ" firstAttribute="trailing" secondItem="lPR-hd-pCI" secondAttribute="trailing" id="El3-gI-unF"/>
+                                                <constraint firstItem="G6N-Qv-gGQ" firstAttribute="top" secondItem="lFt-YU-t0p" secondAttribute="top" constant="4" id="IpT-Rc-4Au"/>
+                                                <constraint firstItem="DUK-OI-vfQ" firstAttribute="leading" secondItem="G6N-Qv-gGQ" secondAttribute="leading" constant="8" id="Ksr-Mu-ui2"/>
+                                                <constraint firstItem="lPR-hd-pCI" firstAttribute="top" secondItem="G6N-Qv-gGQ" secondAttribute="top" id="LdY-A4-lNV"/>
+                                                <constraint firstAttribute="bottom" secondItem="G6N-Qv-gGQ" secondAttribute="bottom" constant="4" id="NJu-Ta-7il"/>
+                                                <constraint firstItem="G6N-Qv-gGQ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DUK-OI-vfQ" secondAttribute="trailing" priority="992" constant="8" id="ieq-cf-Pjg"/>
+                                                <constraint firstItem="G6N-Qv-gGQ" firstAttribute="leading" secondItem="lFt-YU-t0p" secondAttribute="leading" constant="16" id="khU-xq-vxz"/>
+                                                <constraint firstAttribute="trailing" secondItem="G6N-Qv-gGQ" secondAttribute="trailing" constant="16" id="wZp-Jm-KEk"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="MQp-S7-TQo"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="SHT-6M-XIo"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -30,8 +79,8 @@
                         <constraints>
                             <constraint firstItem="zFP-Ks-UUT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="9Pj-Gm-M7N"/>
                             <constraint firstAttribute="trailing" secondItem="zFP-Ks-UUT" secondAttribute="trailing" id="YdB-Yl-qaG"/>
-                            <constraint firstItem="zFP-Ks-UUT" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="59" id="cLf-hr-iUy"/>
-                            <constraint firstAttribute="bottom" secondItem="zFP-Ks-UUT" secondAttribute="bottom" constant="34" id="eSp-c5-U8T"/>
+                            <constraint firstItem="zFP-Ks-UUT" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="59" id="cLf-hr-iUy" userLabel="Table View.top = top"/>
+                            <constraint firstAttribute="bottom" secondItem="zFP-Ks-UUT" secondAttribute="bottom" constant="34" id="eSp-c5-U8T" userLabel="bottom = Table View.bottom"/>
                         </constraints>
                     </view>
                     <connections>
@@ -40,12 +89,17 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15" y="-2"/>
+            <point key="canvasLocation" x="14.503816793893129" y="-2.1126760563380285"/>
         </scene>
     </scenes>
     <resources>
+        <image name="0" width="200" height="132"/>
+        <image name="like" width="42" height="42"/>
         <namedColor name="ypBlack">
             <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ypWhite">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
