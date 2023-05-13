@@ -66,6 +66,11 @@
                                                 <constraint firstAttribute="trailing" secondItem="G6N-Qv-gGQ" secondAttribute="trailing" constant="16" id="wZp-Jm-KEk"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellImage" destination="G6N-Qv-gGQ" id="mdk-0l-x99"/>
+                                            <outlet property="dateLabel" destination="DUK-OI-vfQ" id="vfg-jC-tF2"/>
+                                            <outlet property="likeButton" destination="lPR-hd-pCI" id="NyV-4G-nYX"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
