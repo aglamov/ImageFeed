@@ -42,7 +42,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lPR-hd-pCI" userLabel="LikeButton">
-                                                    <rect key="frame" x="335" y="4" width="42" height="42"/>
+                                                    <rect key="frame" x="324" y="16" width="42" height="42"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="like"/>
                                                 </button>
@@ -56,10 +56,10 @@
                                             <color key="backgroundColor" name="ypBlack"/>
                                             <constraints>
                                                 <constraint firstItem="G6N-Qv-gGQ" firstAttribute="bottom" secondItem="DUK-OI-vfQ" secondAttribute="bottom" constant="8" id="7aX-wj-c4G"/>
-                                                <constraint firstItem="G6N-Qv-gGQ" firstAttribute="trailing" secondItem="lPR-hd-pCI" secondAttribute="trailing" id="El3-gI-unF"/>
+                                                <constraint firstItem="G6N-Qv-gGQ" firstAttribute="trailing" secondItem="lPR-hd-pCI" secondAttribute="trailing" constant="11" id="El3-gI-unF"/>
                                                 <constraint firstItem="G6N-Qv-gGQ" firstAttribute="top" secondItem="lFt-YU-t0p" secondAttribute="top" constant="4" id="IpT-Rc-4Au"/>
                                                 <constraint firstItem="DUK-OI-vfQ" firstAttribute="leading" secondItem="G6N-Qv-gGQ" secondAttribute="leading" constant="8" id="Ksr-Mu-ui2"/>
-                                                <constraint firstItem="lPR-hd-pCI" firstAttribute="top" secondItem="G6N-Qv-gGQ" secondAttribute="top" id="LdY-A4-lNV"/>
+                                                <constraint firstItem="lPR-hd-pCI" firstAttribute="top" secondItem="G6N-Qv-gGQ" secondAttribute="top" constant="12" id="LdY-A4-lNV"/>
                                                 <constraint firstAttribute="bottom" secondItem="G6N-Qv-gGQ" secondAttribute="bottom" constant="4" id="NJu-Ta-7il"/>
                                                 <constraint firstItem="G6N-Qv-gGQ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DUK-OI-vfQ" secondAttribute="trailing" priority="992" constant="8" id="ieq-cf-Pjg"/>
                                                 <constraint firstItem="G6N-Qv-gGQ" firstAttribute="leading" secondItem="lFt-YU-t0p" secondAttribute="leading" constant="16" id="khU-xq-vxz"/>
