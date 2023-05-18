@@ -17,16 +17,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="JVS-f5-WAJ">
-                                <rect key="frame" x="127.66666666666669" y="354.66666666666669" width="138" height="143"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="JVS-f5-WAJ">
+                                <rect key="frame" x="159" y="400" width="75" height="78"/>
                                 <color key="backgroundColor" name="ypBlack"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="ypBlack"/>
                         <constraints>
-                            <constraint firstItem="JVS-f5-WAJ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="iOm-9O-2ha"/>
-                            <constraint firstItem="JVS-f5-WAJ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="sQR-gq-yxI"/>
+                            <constraint firstItem="JVS-f5-WAJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="DJd-9h-WOe"/>
+                            <constraint firstItem="JVS-f5-WAJ" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="QVb-c2-Hp0"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -36,9 +36,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchScreen" width="138" height="143"/>
+        <image name="LaunchScreen" width="75" height="78"/>
         <namedColor name="ypBlack">
-            <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
