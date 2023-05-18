@@ -13,6 +13,7 @@
 		752AED462A0305A800D728B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 752AED442A0305A800D728B9 /* Main.storyboard */; };
 		752AED482A0305A900D728B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 752AED472A0305A900D728B9 /* Assets.xcassets */; };
 		752AED4B2A0305A900D728B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 752AED492A0305A900D728B9 /* LaunchScreen.storyboard */; };
+		7580B4BD2A15710100092EDA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7580B4BC2A15710100092EDA /* ProfileViewController.swift */; };
 		75A302E02A0C3C76004B384B /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A302DF2A0C3C76004B384B /* ImagesListCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		752AED472A0305A900D728B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		752AED4A2A0305A900D728B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		752AED4C2A0305A900D728B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7580B4BC2A15710100092EDA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		75A302DF2A0C3C76004B384B /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,6 +76,7 @@
 			children = (
 				752AED422A0305A800D728B9 /* ImagesListViewController.swift */,
 				75A302DF2A0C3C76004B384B /* ImagesListCell.swift */,
+				7580B4BC2A15710100092EDA /* ProfileViewController.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -151,6 +154,7 @@
 			files = (
 				752AED432A0305A800D728B9 /* ImagesListViewController.swift in Sources */,
 				75A302E02A0C3C76004B384B /* ImagesListCell.swift in Sources */,
+				7580B4BD2A15710100092EDA /* ProfileViewController.swift in Sources */,
 				752AED3F2A0305A800D728B9 /* AppDelegate.swift in Sources */,
 				752AED412A0305A800D728B9 /* SceneDelegate.swift in Sources */,
 			);
