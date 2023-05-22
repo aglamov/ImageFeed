@@ -17,4 +17,8 @@ final class ProfileViewController: UIViewController {
     @IBOutlet private weak var exitButton: UIButton!
     @IBAction private func exitButton(_ sender: Any) {
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+          return .lightContent
+    }
 }

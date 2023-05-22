@@ -74,5 +74,8 @@ extension ImagesListViewController: UITableViewDataSource {
             return imageListCell
         }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+          return .lightContent
+    }
 
 }
