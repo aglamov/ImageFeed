@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     
     @IBOutlet private var tableView: UITableView!
     
@@ -26,7 +26,30 @@ class ImagesListViewController: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//            if segue.identifier == "ShowSingleImage" { // 1
+//                let viewController = segue.destination as! SingleImageViewController // 2
+//                let indexPath = sender as! IndexPath // 3
+//                let image = UIImage(named: photosName[indexPath.row]) // 4
+//                viewController.singleImage.image = image // 5
+//            } else {
+//                super.prepare(for: segue, sender: sender) // 6
+//            }
+//        }
            
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowSingleImage" {
+            let viewController = segue.destination as! SingleImageViewController
+            let indexPath = sender as! IndexPath
+            let image = UIImage(named: photosName[indexPath.row])
+            _ = viewController.view // CRASH FIXED !?
+            viewController.singleImage.image = image
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
+    
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return
@@ -43,7 +66,9 @@ class ImagesListViewController: UIViewController {
 }
 
 extension ImagesListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "ShowSingleImage", sender: indexPath)
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let image = UIImage(named: photosName[indexPath.row]) else {

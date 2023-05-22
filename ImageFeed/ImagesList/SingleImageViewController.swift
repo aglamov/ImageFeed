@@ -9,6 +9,12 @@ import Foundation
 import UIKit
 
 final class SingleImageViewController: UIViewController {
+    var image: UIImage!
     
     @IBOutlet weak var singleImage: UIImageView!
+    
+    override func viewDidLoad() {
+            super.viewDidLoad()
+            singleImage.image = image
+        }
 }
