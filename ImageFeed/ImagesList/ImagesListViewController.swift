@@ -9,9 +9,16 @@ import UIKit
 
 final class ImagesListViewController: UIViewController {
     
+    private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
+    
     @IBOutlet private var tableView: UITableView!
     
     private let photosName: [String] = Array(0..<22).map{ "\($0)" }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+    }
     
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -20,49 +27,32 @@ final class ImagesListViewController: UIViewController {
         return formatter
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        
-    }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//            if segue.identifier == "ShowSingleImage" { // 1
-//                let viewController = segue.destination as! SingleImageViewController // 2
-//                let indexPath = sender as! IndexPath // 3
-//                let image = UIImage(named: photosName[indexPath.row]) // 4
-//                viewController.singleImage.image = image // 5
-//            } else {
-//                super.prepare(for: segue, sender: sender) // 6
-//            }
-//        }
-           
+               
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowSingleImage" {
+        if segue.identifier == ShowSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
-            _ = viewController.view // CRASH FIXED !?
-            viewController.singleImage.image = image
+            let imageName = photosName[indexPath.row]
+            let image = UIImage(named: "\(imageName)_full_size") ?? UIImage(named: imageName)
+            viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
-    
+}
+extension ImagesListViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return
         }
-
+        
         cell.cellImage.image = image
         cell.dateLabel.text = dateFormatter.string(from: Date())
-
+        
         let isLiked = indexPath.row % 2 == 1
         let likeImage = isLiked ? UIImage(named: "Like") : UIImage(named: "noLike")
         cell.likeButton.setImage(likeImage, for: .normal)
-    }
-    
+    }    
 }
 
 extension ImagesListViewController: UITableViewDelegate {
