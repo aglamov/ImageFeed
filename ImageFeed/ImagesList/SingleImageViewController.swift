@@ -19,7 +19,7 @@ final class SingleImageViewController: UIViewController {
     
     @IBOutlet private weak var shareButton: UIButton!
     
-    @IBOutlet weak var singleImage: UIImageView!
+    @IBOutlet private weak var singleImage: UIImageView!
     
     @IBOutlet private weak var scrollView: UIScrollView!
     
