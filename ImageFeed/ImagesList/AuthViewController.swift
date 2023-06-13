@@ -26,14 +26,10 @@ final class AuthViewController : UIViewController {
     
     private func addButtonLogin () -> UIButton {
        
-        lazy var loginButton = UIButton.systemButton(
-                        with: UIImage(systemName: "ipad.and.arrow.forward")!,
-                        target: self,
-                        action: #selector(Self.didTapButton)
-                    )
-        
+        lazy var loginButton = UIButton(type: .system)
         loginButton.setTitle("Войти", for: .normal)
-      
+        loginButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+
         loginButton.setTitleColor(.black, for: .normal)
         loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: UIFont.Weight.bold)
 
