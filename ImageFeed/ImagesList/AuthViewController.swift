@@ -9,8 +9,10 @@ import Foundation
 import UIKit
 
 final class AuthViewController : UIViewController {
-    @objc private func didTapButton(){}
-    
+    @objc private func didTapButton(){
+        performSegue(withIdentifier: "WebViewSegue", sender: self)
+    }
+      
     private func addLogoImage () -> UIImageView {
         lazy var profileImageView: UIImageView = {
             let profileImage = UIImage (imageLiteralResourceName: "LogoOfUnsplash")
@@ -20,24 +22,25 @@ final class AuthViewController : UIViewController {
             return imageView
         }()
         return profileImageView
-        
     }
     
     private func addButtonLogin () -> UIButton {
+       
+        lazy var loginButton = UIButton.systemButton(
+                        with: UIImage(systemName: "ipad.and.arrow.forward")!,
+                        target: self,
+                        action: #selector(Self.didTapButton)
+                    )
         
-        let loginButton = UIButton()
-//        lazy var loginButton = UIButton.systemButton(
-//            with: UIImage(),
-//            target: self,
-//            action: #selector(Self.didTapButton)
-//
-//        )
         loginButton.setTitle("Войти", for: .normal)
       
         loginButton.setTitleColor(.black, for: .normal)
+        loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: UIFont.Weight.bold)
+
         loginButton.backgroundColor = .white
         loginButton.layer.cornerRadius = 16
         loginButton.translatesAutoresizingMaskIntoConstraints = false
+        
         return loginButton
     }
     
@@ -54,19 +57,12 @@ final class AuthViewController : UIViewController {
         
         let loginButton = addButtonLogin()
         view.addSubview(loginButton)
-      //  loginButton.titleLabel = "Войти"
         loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -124).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-        
-        
-        
-//        loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 124).isActive = true
-//        loginButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16) .isActive = true
-////        loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.).isActive = true
-//        loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-    }
+        loginButton.isEnabled = true
     
+    }
     
 }
