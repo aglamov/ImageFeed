@@ -76,33 +76,18 @@ final class AuthViewController : UIViewController {
         loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -124).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         loginButton.isEnabled = true
-        
     }
     
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        //TODO: process code  этот код будт показывать следующий экран !!!!!! Внимание вставлять сюда
-//        OAuth2Service.shared.fetchOAuthToken(code) { result in
-//            switch result {
-//            case .success(let token):
-//                print ()//OAuth2TokenStorage.shared.token = token
-//                
-//            case .failure(let error):
-//                assertionFailure(code)
-//                //                    switchToTabBarController()
-//            }
-//        }
         delegate?.authViewController(self, didAuthenticateWithCode: code)
-        
     }
-    
     
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         dismiss(animated: true)
-        
     }
 }
 

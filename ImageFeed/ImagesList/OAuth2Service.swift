@@ -14,11 +14,10 @@ final class OAuth2Service {
     private let urlSession = URLSession.shared
     private (set) var authToken: String? {
         get {
-            //   return OAuth2TokenStorage().token
-            return ""
+            return OAuth2TokenStorage().token
         }
         set {
-            //   OAuth2TokenStorage().token = newValue
+            OAuth2TokenStorage().token = newValue
         } }
     func fetchOAuthToken(
         _ code: String,
@@ -75,11 +74,7 @@ extension OAuth2Service {
             case createdAt = "created_at"
         }
     } }
-// MARK: - HTTP Request
-// Если в вашем в проекте уже объявлена переменная `DefaultBaseURL` (с тем же значением),
-// то строчку ниже можно удалить.
-//fileprivate let DefaultBaseURL = URL(string: "https://api.unsplash.com")!
-extension URLRequest {
+
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
