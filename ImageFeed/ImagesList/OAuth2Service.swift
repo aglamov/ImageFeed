@@ -1,4 +1,5 @@
 //
+<<<<<<< HEAD
 //  OAuth2Service.swift
 //  ImageFeed
 //
@@ -8,6 +9,18 @@
 import UIKit
 import Foundation
 final class OAuth2Service {
+=======
+//  OAuthTokenResponseBody.swift
+//  ImageFeed
+//
+//  Created by Рамиль Аглямов on 26.06.2023.
+//
+
+import Foundation
+
+final class OAuth2Service {
+    
+>>>>>>> sprint_10-1
     static let shared = OAuth2Service()
     private let urlSession = URLSession.shared
     private (set) var authToken: String? {
@@ -17,8 +30,12 @@ final class OAuth2Service {
         set {
             OAuth2TokenStorage().token = newValue
         } }
+<<<<<<< HEAD
     
     func fetchOAuthToken(
+=======
+    func fetchAuthToken(
+>>>>>>> sprint_10-1
         _ code: String,
         completion: @escaping (Result<String, Error>) -> Void ){
             let request = authTokenRequest(code: code)
@@ -71,13 +88,23 @@ extension OAuth2Service {
             case createdAt = "created_at"
         }
     } }
+<<<<<<< HEAD
 // MARK: - HTTP Request
+=======
+
+//fileprivate let DefaultBaseURL = URL(string: "https://api.unsplash.com")!
+>>>>>>> sprint_10-1
 extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
         baseURL: URL = DefaultBaseURL
     ) -> URLRequest {
+<<<<<<< HEAD
+=======
+        
+        
+>>>>>>> sprint_10-1
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
         request.httpMethod = httpMethod
         return request

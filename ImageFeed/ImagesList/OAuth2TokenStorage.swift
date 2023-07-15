@@ -2,7 +2,11 @@
 //  OAuth2TokenStorage.swift
 //  ImageFeed
 //
+<<<<<<< HEAD
 //  Created by Рамиль Аглямов on 15.07.2023.
+=======
+//  Created by Рамиль Аглямов on 28.06.2023.
+>>>>>>> sprint_10-1
 //
 
 import Foundation
