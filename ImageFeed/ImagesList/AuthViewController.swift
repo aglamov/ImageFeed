@@ -8,11 +8,29 @@
 import Foundation
 import UIKit
 
+protocol AuthViewControllerDelegate: AnyObject {
+    func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String)
+}
+
 final class AuthViewController : UIViewController {
+    let showWebViewSigueIdentifier = "ShowWebView"
+    weak var delegate: AuthViewControllerDelegate?
+    
     @objc private func didTapButton(){
-        performSegue(withIdentifier: "WebViewSegue", sender: self)
+        performSegue(withIdentifier: showWebViewSigueIdentifier, sender: self)
     }
-      
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == showWebViewSigueIdentifier {
+            guard
+                let webViewViewController = segue.destination as? WebViewViewController
+            else { fatalError("Failed to prepare for \(showWebViewSigueIdentifier)") }
+            webViewViewController.delegate = self
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
+    
     private func addLogoImage () -> UIImageView {
         lazy var profileImageView: UIImageView = {
             let profileImage = UIImage (imageLiteralResourceName: "LogoOfUnsplash")
@@ -25,14 +43,14 @@ final class AuthViewController : UIViewController {
     }
     
     private func addButtonLogin () -> UIButton {
-       
+        
         lazy var loginButton = UIButton(type: .system)
         loginButton.setTitle("Войти", for: .normal)
         loginButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
-
+        
         loginButton.setTitleColor(.black, for: .normal)
         loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: UIFont.Weight.bold)
-
+        
         loginButton.backgroundColor = .white
         loginButton.layer.cornerRadius = 16
         loginButton.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +76,33 @@ final class AuthViewController : UIViewController {
         loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -124).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         loginButton.isEnabled = true
-    
+        
     }
     
 }
+
+extension AuthViewController: WebViewViewControllerDelegate {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        //TODO: process code  этот код будт показывать следующий экран !!!!!! Внимание вставлять сюда
+//        OAuth2Service.shared.fetchOAuthToken(code) { result in
+//            switch result {
+//            case .success(let token):
+//                print ()//OAuth2TokenStorage.shared.token = token
+//                
+//            case .failure(let error):
+//                assertionFailure(code)
+//                //                    switchToTabBarController()
+//            }
+//        }
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
+        
+    }
+    
+    
+    
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
+        dismiss(animated: true)
+        
+    }
+}
+

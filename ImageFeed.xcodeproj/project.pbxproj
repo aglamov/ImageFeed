@@ -17,6 +17,8 @@
 		752AED4B2A0305A900D728B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 752AED492A0305A900D728B9 /* LaunchScreen.storyboard */; };
 		7580B4BD2A15710100092EDA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7580B4BC2A15710100092EDA /* ProfileViewController.swift */; };
 		7580B4BF2A1AB49600092EDA /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7580B4BE2A1AB49600092EDA /* SingleImageViewController.swift */; };
+		7582D6522A5C7BC40052F80B /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7582D6512A5C7BC40052F80B /* OAuth2Service.swift */; };
+		7582D6542A5C83F30052F80B /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7582D6532A5C83F30052F80B /* SplashViewController.swift */; };
 		759861072A311F5F00401067 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759861062A311F5F00401067 /* Constants.swift */; };
 		75A302E02A0C3C76004B384B /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A302DF2A0C3C76004B384B /* ImagesListCell.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +36,8 @@
 		752AED4C2A0305A900D728B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7580B4BC2A15710100092EDA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		7580B4BE2A1AB49600092EDA /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		7582D6512A5C7BC40052F80B /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
+		7582D6532A5C83F30052F80B /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		759861062A311F5F00401067 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		75A302DF2A0C3C76004B384B /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +93,8 @@
 				759861062A311F5F00401067 /* Constants.swift */,
 				751363372A3271FF009B4316 /* AuthViewController.swift */,
 				751363392A38F89B009B4316 /* WebViewViewController.swift */,
+				7582D6512A5C7BC40052F80B /* OAuth2Service.swift */,
+				7582D6532A5C83F30052F80B /* SplashViewController.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -172,7 +178,9 @@
 				759861072A311F5F00401067 /* Constants.swift in Sources */,
 				7580B4BF2A1AB49600092EDA /* SingleImageViewController.swift in Sources */,
 				7513633A2A38F89B009B4316 /* WebViewViewController.swift in Sources */,
+				7582D6522A5C7BC40052F80B /* OAuth2Service.swift in Sources */,
 				752AED412A0305A800D728B9 /* SceneDelegate.swift in Sources */,
+				7582D6542A5C83F30052F80B /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
