@@ -5,12 +5,10 @@
 //  Created by Рамиль Аглямов on 10.07.2023.
 //
 
+import UIKit
 import Foundation
-
 final class OAuth2Service {
-    
     static let shared = OAuth2Service()
-    
     private let urlSession = URLSession.shared
     private (set) var authToken: String? {
         get {
@@ -19,6 +17,7 @@ final class OAuth2Service {
         set {
             OAuth2TokenStorage().token = newValue
         } }
+    
     func fetchOAuthToken(
         _ code: String,
         completion: @escaping (Result<String, Error>) -> Void ){
@@ -30,12 +29,10 @@ final class OAuth2Service {
                     let authToken = body.accessToken
                     self.authToken = authToken
                     completion(.success(authToken))
-                    
                 case .failure(let error):
                     completion(.failure(error))
                 } }
             task.resume()
-            
         }
 }
 extension OAuth2Service {
@@ -74,14 +71,13 @@ extension OAuth2Service {
             case createdAt = "created_at"
         }
     } }
-
+// MARK: - HTTP Request
+extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
         baseURL: URL = DefaultBaseURL
     ) -> URLRequest {
-        
-        
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
         request.httpMethod = httpMethod
         return request
@@ -120,6 +116,4 @@ extension URLSession {
         })
         task.resume()
         return task
-    }
-    
-}
+    } }
