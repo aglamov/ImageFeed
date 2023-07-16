@@ -13,12 +13,8 @@ protocol AuthViewControllerDelegate: AnyObject {
 }
 
 final class AuthViewController : UIViewController {
-<<<<<<< HEAD
     let showWebViewSigueIdentifier = "ShowWebView"
     weak var delegate: AuthViewControllerDelegate?
-=======
-    private let ShowWebViewSegueIdentifier = "ShowWebView"
->>>>>>> sprint_10-1
     
     @objc private func didTapButton(){
         performSegue(withIdentifier: showWebViewSigueIdentifier, sender: self)
@@ -62,16 +58,6 @@ final class AuthViewController : UIViewController {
         return loginButton
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowWebViewSegueIdentifier {
-            guard
-                let webViewViewController = segue.destination as? WebViewViewController
-            else { fatalError("Failed to prepare for \(ShowWebViewSegueIdentifier)") }
-            webViewViewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
     
     override  func viewDidLoad() {
         super.viewDidLoad()
@@ -96,30 +82,12 @@ final class AuthViewController : UIViewController {
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-<<<<<<< HEAD
         delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
     
     
-=======
-        OAuth2Service.shared.fetchAuthToken(code) { result in
-                        switch result {
-                        case .success(let token):
-                            OAuth2TokenStorage.shared.token = token
-                        case .failure(let error):
-                            assertionFailure(code)
-                        }
-                    }
-                   
-                }
-
-
->>>>>>> sprint_10-1
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         dismiss(animated: true)
     }
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> sprint_10-1
