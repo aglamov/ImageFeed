@@ -13,7 +13,7 @@ protocol AuthViewControllerDelegate: AnyObject {
 }
 
 final class AuthViewController : UIViewController {
-    let showWebViewSigueIdentifier = "ShowWebView"
+    private let showWebViewSigueIdentifier = "ShowWebView"
     weak var delegate: AuthViewControllerDelegate?
     
     @objc private func didTapButton(){

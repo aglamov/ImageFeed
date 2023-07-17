@@ -17,7 +17,12 @@ protocol WebViewViewControllerDelegate: AnyObject {
 
 final class WebViewViewController : UIViewController {
     @objc private func didTapBackButton(_ sender: Any?) {
-        
+        if let nvc = navigationController {
+            nvc.popViewController(animated: true)
+        } else {
+            // otherwise, dismiss it
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     weak var delegate: WebViewViewControllerDelegate?
