@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import WebKit
+
 fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
 
 protocol WebViewViewControllerDelegate: AnyObject {
