@@ -9,6 +9,13 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     @objc private func didTapButton(){}
+    var profileService = ProfileService.shared
+  
+    var token = OAuth2TokenStorage.shared.token
+//    private (set) var profile: Profile?
+    var textLabel: String = ""
+    var textLogin: String = ""
+    var textBio: String = ""
     
     private func addProfileImage () -> UIImageView {
             lazy var profileImageView: UIImageView = {
@@ -21,27 +28,27 @@ final class ProfileViewController: UIViewController {
         return profileImageView
     }
     
-    private func addLabelName () -> UILabel {
+    private func addLabelName (text: String) -> UILabel {
         lazy var labelName = UILabel ()
-        labelName.text = "Рамиль Аглямов"
+        labelName.text = text
         labelName.textColor = .white
         labelName.font = .systemFont(ofSize: 23, weight: .bold)
         labelName.translatesAutoresizingMaskIntoConstraints = false
         return labelName
     }
         
-    private func addLabelEmail () -> UILabel {
+    private func addLabelEmail (text: String) -> UILabel {
         lazy var labelEmail = UILabel ()
-        labelEmail.text = "aglamov@yandex.ru"
+        labelEmail.text = text
         labelEmail.textColor = .gray
         labelEmail.font = .systemFont(ofSize: 13)
         labelEmail.translatesAutoresizingMaskIntoConstraints = false
         return labelEmail
     }
     
-    private func addLabelDescription () -> UILabel {
+    private func addLabelDescription (text: String) -> UILabel {
         lazy var labelDescription = UILabel ()
-        labelDescription.text = "Hello"
+        labelDescription.text = text
         labelDescription.textColor = .white
         labelDescription.font = .systemFont(ofSize: 13)
         labelDescription.translatesAutoresizingMaskIntoConstraints = false
@@ -62,7 +69,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+     
         let imageView = addProfileImage()
         view.addSubview(imageView)
         imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
@@ -70,8 +77,8 @@ final class ProfileViewController: UIViewController {
         imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
-        
-        let labelName = addLabelName()
+        var  text = profileService.profile?.name
+        let labelName = addLabelName(text: text ?? "Ошибка получения данных")
         view.addSubview(labelName)
         
         NSLayoutConstraint.activate([
@@ -79,16 +86,16 @@ final class ProfileViewController: UIViewController {
             labelName.leadingAnchor.constraint(equalTo: imageView.leadingAnchor)
         ])
         
-        
-        let labelEmail = addLabelEmail()
+        text = profileService.profile?.loginName
+        let labelEmail = addLabelEmail(text: text ?? "Ошибка получения данных")
         view.addSubview(labelEmail)
         NSLayoutConstraint.activate([
             labelEmail.topAnchor.constraint(equalTo: labelName.bottomAnchor, constant: 8),
             labelEmail.leadingAnchor.constraint(equalTo: labelName.leadingAnchor)
         ])
         
-        
-        let labelDescription = addLabelDescription()
+        text = profileService.profile?.bio
+        let labelDescription = addLabelDescription(text: text ?? "Ошибка получения данных")
         view.addSubview(labelDescription)
         NSLayoutConstraint.activate([
             labelDescription.topAnchor.constraint(equalTo: labelEmail.bottomAnchor, constant: 8),

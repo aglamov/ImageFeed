@@ -9,7 +9,8 @@ import UIKit
 import Foundation
 final class OAuth2Service {
     static let shared = OAuth2Service()
-    
+    private let profileService = ProfileService.shared
+    private var profile: Profile?
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
@@ -40,6 +41,7 @@ final class OAuth2Service {
                     let authToken = body.accessToken
                     self.authToken = authToken
                     completion(.success(authToken))
+                    self.fetchProfile(token: authToken)
                     self.task = nil
                 case .failure(let error):
                     completion(.failure(error))
@@ -49,7 +51,25 @@ final class OAuth2Service {
             self.task = task
             task.resume()
         }
+    
+    private func fetchProfile(token:String) {
+            profileService.fetchProfile(token) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let profile):
+                    self.profile = profile
+                    UIBlockingProgressHUD.dismiss()
+                  //  self.switchToTabBarController()
+                case .failure:
+                    UIBlockingProgressHUD.dismiss()
+
+                    break
+                }
+            }
+        }
+
 }
+
 
 extension OAuth2Service {
     private func object(
@@ -93,8 +113,15 @@ extension URLRequest {
         path: String,
         httpMethod: String,
         baseURL: URL = DefaultBaseURL
+        
+        
+        
     ) -> URLRequest {
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
+        
+        
+        
+      //  request.addValue("Token \(authToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = httpMethod
         return request
     } }
@@ -103,7 +130,10 @@ enum NetworkError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
+    case noData
+    case invalidStatusCode
 }
+
 extension URLSession {
     func data(
         for request: URLRequest,
