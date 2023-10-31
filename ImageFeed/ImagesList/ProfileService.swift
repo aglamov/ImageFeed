@@ -43,7 +43,9 @@ final class ProfileService {
                         let name = "\(profileResult.firstName ?? "") \(profileResult.lastName ?? "")"
                         let bio = profileResult.bio ?? ""
                         self.profile = Profile(username: username, name: name, loginName: loginName, bio: bio)
-                        print (self.profile as Any)
+                        
+                        ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in}
+                        // print (self.profile as Any)
                         completion(.success(self.profile!))
                     } catch {
                         completion(.failure(error))

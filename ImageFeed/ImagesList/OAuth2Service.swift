@@ -10,7 +10,9 @@ import Foundation
 final class OAuth2Service {
     static let shared = OAuth2Service()
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     private var profile: Profile?
+    private var ava: Ava?
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
@@ -43,6 +45,7 @@ final class OAuth2Service {
                     completion(.success(authToken))
                     self.fetchProfile(token: authToken)
                     self.task = nil
+                   // profileImageService.fetchProfileImageURL(username: profile.username, <#(Result<String, Error>) -> Void#>)
                 case .failure(let error):
                     completion(.failure(error))
                     self.lastCode = nil
@@ -67,6 +70,21 @@ final class OAuth2Service {
                 }
             }
         }
+//    private func fetchProfileIm(name:String) {
+//        profileImageService.fetchProfileImageURL(username: profile!.username) { [weak self] result in
+//                guard let self = self else { return }
+//                switch result {
+//                case .success(let ava):
+//                    self.ava = ava?
+//                    UIBlockingProgressHUD.dismiss()
+//                  //  self.switchToTabBarController()
+//                case .failure:
+//                    UIBlockingProgressHUD.dismiss()
+//
+//                    break
+//                }
+//            }
+//        }
 
 }
 

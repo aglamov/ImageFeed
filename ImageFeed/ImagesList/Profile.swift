@@ -12,7 +12,6 @@ struct ProfileResult: Codable {
     var firstName: String?
     var lastName: String?
     var bio: String?
-    var profileImage: ProfileImage?
     
     enum CodingKeys: String, CodingKey {
         case username
@@ -22,10 +21,16 @@ struct ProfileResult: Codable {
     }
 }
 
-struct ProfileImage: Codable {
-    let small: String?
-    let medium: String?
-    let large: String?
+struct UserResult: Codable {
+    var profile_image: ProfileImageURL
+}
+
+struct ProfileImageURL: Codable {
+    var small: String?
+}
+
+struct Ava {
+    var avaUrl: String
 }
 
 struct Profile {
