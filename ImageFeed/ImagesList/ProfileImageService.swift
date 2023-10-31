@@ -42,20 +42,13 @@ final class ProfileImageService {
                         let UserResult = try decoder.decode(UserResult.self, from: data)
                         guard let self = self else { return }
                         let avaURL = UserResult.profile_image.small
-                     //   self.profileImageURL?.small = avaURL
-                      //  self.avatarURL = avaURL
-                       // completion(.success((self.avatarURL!)))
-                       // completion(.success((self.profileImageURL?.small!)!))
-                       // self.profile = Profile(username: username, name: name, loginName: loginName, bio: bio)
                         self.ava = Ava(avaUrl: avaURL!)
                         completion(.success(self.ava!.avaUrl))
-                        NotificationCenter.default                                     // 1
-                            .post(                                                     // 2
-                                name: ProfileImageService.DidChangeNotification,       // 3
-                                object: self,                                          // 4
-                                userInfo: ["URL": self.ava!.avaUrl])                    // 5
-                     //   completion(.success(avaURL))
-                       // return
+                        NotificationCenter.default
+                            .post(
+                                name: ProfileImageService.DidChangeNotification,
+                                object: self,
+                                userInfo: ["URL": self.ava!.avaUrl])
                     } catch {
                         completion(.failure(error))
                     }
