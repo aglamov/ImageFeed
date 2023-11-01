@@ -17,14 +17,14 @@ final class ProfileImageService {
     private (set) var profileImageURL: ProfileImageURL?
     private let urlSession = URLSession.shared
     private var token = OAuth2TokenStorage.shared.token
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
-    
         task?.cancel()
-        guard let request = profileUserRequest(token: token!, username: username) else { return }
+        
+        guard let request = profileUserRequest(token: token ?? "", username: username) else { return }
         task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-           // DispatchQueue.main.async {
+
                 if let error = error {
                     completion(.failure(error))
                     return
@@ -42,13 +42,15 @@ final class ProfileImageService {
                         let UserResult = try decoder.decode(UserResult.self, from: data)
                         guard let self = self else { return }
                         let avaURL = UserResult.profile_image.small
-                        self.ava = Ava(avaUrl: avaURL!)
-                        completion(.success(self.ava!.avaUrl))
+                        self.ava = Ava(avaUrl: avaURL ?? "")
+                        
                         NotificationCenter.default
                             .post(
-                                name: ProfileImageService.DidChangeNotification,
+                                name: ProfileImageService.didChangeNotification,
                                 object: self,
-                                userInfo: ["URL": self.ava!.avaUrl])
+                                
+                                userInfo: ["URL": self.ava?.avaUrl as Any])
+                        completion(.success(self.ava?.avaUrl ?? ""))
                     } catch {
                         completion(.failure(error))
                     }
@@ -56,13 +58,12 @@ final class ProfileImageService {
                     completion(.failure(NetworkError.noData))
                 }
             }
-      //  }
-        task!.resume()
+        task?.resume()
     }
 }
 
 private func profileUserRequest (token: String, username: String) -> URLRequest? {
-    let url = URL(string: "\(DefaultBaseURL)users/\(username)")!
+    guard let url = URL(string: "\(DefaultBaseURL)users/\(username)") else { return nil}
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     

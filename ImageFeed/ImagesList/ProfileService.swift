@@ -14,6 +14,7 @@ final class ProfileService {
     
     private let urlSession = URLSession.shared
     private var token = OAuth2TokenStorage.shared.token
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileProviderDidChange")
     
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         assert(Thread.isMainThread)
@@ -44,8 +45,14 @@ final class ProfileService {
                         let bio = profileResult.bio ?? ""
                         self.profile = Profile(username: username, name: name, loginName: loginName, bio: bio)
                         
+                        NotificationCenter.default
+                            .post(
+                                name: ProfileService.didChangeNotification,
+                                object: self,
+                                userInfo: ["user": self.profile?.name as Any, "loginName": self.profile?.loginName as Any, "bio": self.profile?.bio as Any])
+                        
                         ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in}
-                        // print (self.profile as Any)
+                       
                         completion(.success(self.profile!))
                     } catch {
                         completion(.failure(error))

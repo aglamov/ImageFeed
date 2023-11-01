@@ -6,7 +6,7 @@
 ////
 //
 import UIKit
-import Foundation
+
 final class OAuth2Service {
     static let shared = OAuth2Service()
     private let profileService = ProfileService.shared
@@ -42,10 +42,9 @@ final class OAuth2Service {
                 case .success(let body):
                     let authToken = body.accessToken
                     self.authToken = authToken
-                    completion(.success(authToken))
                     self.fetchProfile(token: authToken)
                     self.task = nil
-                   // profileImageService.fetchProfileImageURL(username: profile.username, <#(Result<String, Error>) -> Void#>)
+                    completion(.success(authToken))
                 case .failure(let error):
                     completion(.failure(error))
                     self.lastCode = nil
@@ -62,6 +61,7 @@ final class OAuth2Service {
                 case .success(let profile):
                     self.profile = profile
                     UIBlockingProgressHUD.dismiss()
+                    self.fetchProfileImage(name: profile.username)
                   //  self.switchToTabBarController()
                 case .failure:
                     UIBlockingProgressHUD.dismiss()
@@ -70,21 +70,12 @@ final class OAuth2Service {
                 }
             }
         }
-//    private func fetchProfileIm(name:String) {
-//        profileImageService.fetchProfileImageURL(username: profile!.username) { [weak self] result in
-//                guard let self = self else { return }
-//                switch result {
-//                case .success(let ava):
-//                    self.ava = ava?
-//                    UIBlockingProgressHUD.dismiss()
-//                  //  self.switchToTabBarController()
-//                case .failure:
-//                    UIBlockingProgressHUD.dismiss()
-//
-//                    break
-//                }
-//            }
-//        }
+
+    private func fetchProfileImage(name: String) {
+    profileImageService.fetchProfileImageURL(username: name) { result in
+    UIBlockingProgressHUD.dismiss()
+    }
+    }
 
 }
 
@@ -139,7 +130,6 @@ extension URLRequest {
         
         
         
-      //  request.addValue("Token \(authToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = httpMethod
         return request
     } }

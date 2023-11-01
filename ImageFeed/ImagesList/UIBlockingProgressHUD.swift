@@ -5,7 +5,6 @@
 //  Created by Рамиль Аглямов on 21.10.2023.
 //
 
-import Foundation
 import UIKit
 import ProgressHUD
 

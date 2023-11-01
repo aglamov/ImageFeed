@@ -17,6 +17,7 @@ final class ProfileViewController: UIViewController {
     let profileImageService = ProfileImageService.shared
     private (set) var profileImageURL: ProfileImageURL?
     private var profileImageServiceObserver: NSObjectProtocol?
+    private var profileServiceObserver: NSObjectProtocol?
     
     private let imageView: UIImageView = {
         let profileImage = UIImage(named: "avatar")
@@ -25,34 +26,46 @@ final class ProfileViewController: UIViewController {
         return imageView
     }()
     
-    var textLabel: String = ""
-    var textLogin: String = ""
-    var textBio: String = ""
+    private var textLabel: String = ""
+    private var textLogin: String = ""
+    private var textBio: String = ""
     
-    private func addLabelName (text: String) -> UILabel {
+    private let labelName: UILabel = {
         lazy var labelName = UILabel ()
-        labelName.text = text
         labelName.textColor = .white
         labelName.font = .systemFont(ofSize: 23, weight: .bold)
         labelName.translatesAutoresizingMaskIntoConstraints = false
         return labelName
-    }
+    }()
     
-    private func addLabelEmail (text: String) -> UILabel {
+    private let labelEmail: UILabel = {
         lazy var labelEmail = UILabel ()
-        labelEmail.text = text
         labelEmail.textColor = .gray
         labelEmail.font = .systemFont(ofSize: 13)
         labelEmail.translatesAutoresizingMaskIntoConstraints = false
         return labelEmail
-    }
+    }()
     
-    private func addLabelDescription (text: String) -> UILabel {
+    private let labelDescription: UILabel = {
         lazy var labelDescription = UILabel ()
-        labelDescription.text = text
         labelDescription.textColor = .white
         labelDescription.font = .systemFont(ofSize: 13)
         labelDescription.translatesAutoresizingMaskIntoConstraints = false
+        return labelDescription
+    }()
+    
+    private func addLabelName (text: String) -> UILabel {
+        labelName.text = text
+        return labelName
+    }
+    
+    private func addLabelEmail (text: String) -> UILabel {
+        labelEmail.text = text
+        return labelEmail
+    }
+    
+    private func addLabelDescription (text: String) -> UILabel {
+        labelDescription.text = text
         return labelDescription
     }
     
@@ -70,6 +83,11 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in}
+        //ProfileService.shared.fetchProfile(<#T##token: String##String#>, completion: <#T##(Result<Profile, Error>) -> Void#>)
+        profileService.fetchProfile(token!) { result in
+            UIBlockingProgressHUD.dismiss()
+        }
         
         view.addSubview(imageView)
         imageView.tintColor = .gray
@@ -78,6 +96,7 @@ final class ProfileViewController: UIViewController {
         imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        
         
         let imageUrl = URL (string: profileImageService.ava?.avaUrl ?? "")
         let processor = RoundCornerImageProcessor(cornerRadius: 13)//imageView.frame.width)
@@ -112,14 +131,25 @@ final class ProfileViewController: UIViewController {
         
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
-                forName: ProfileImageService.DidChangeNotification,
+                forName: ProfileImageService.didChangeNotification,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
                 guard let self = self else { return }
                 self.updateAvatar()
             }
+        
+        profileServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateInfo()
+            }
         updateAvatar()
+        updateInfo()
         
         let logoutButton = addButtonLogout()
         view.addSubview(logoutButton)
@@ -130,7 +160,7 @@ final class ProfileViewController: UIViewController {
     
     private func updateAvatar() {
         guard
-            let profileImageURL =  ava?.avaUrl,
+            let profileImageURL =  profileImageService.ava?.avaUrl,
             let url = URL(string: profileImageURL)
         else {return}
         
@@ -142,9 +172,26 @@ final class ProfileViewController: UIViewController {
         cache.clearMemoryCache()
     }
     
-    private func fetchProfileImageURL(username: String) {
-       
-        profileImageService.fetchProfileImageURL(username: username) { _ in }
+    private func updateInfo() {
+        labelName.text = profileService.profile?.name
+        labelEmail.text = profileService.profile?.loginName
+        labelDescription.text = profileService.profile?.bio
     }
-        
+    
+    
+    private func fetchProfile(token:String) {
+        profileService.fetchProfile(token) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let profile):
+                self.profile = profile
+                UIBlockingProgressHUD.dismiss()
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+                
+                break
+            }
+        }
+    }
+    
 }
