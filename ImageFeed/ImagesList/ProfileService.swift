@@ -67,7 +67,7 @@ final class ProfileService {
 }
 
 private func profileRequest (token: String) -> URLRequest? {
-    let url = URL(string: "\(DefaultBaseURL)me")!
+    let url = URL(string: "\(Constants.defaultBaseURL)me")!
     var request = URLRequest(url: url)  
     request.httpMethod = "GET"
     request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")

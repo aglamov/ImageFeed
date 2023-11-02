@@ -12,7 +12,7 @@ final class OAuth2Service {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var profile: Profile?
-    private var ava: Ava?
+  //  private var ava: Ava?
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
@@ -48,35 +48,32 @@ final class OAuth2Service {
                 case .failure(let error):
                     completion(.failure(error))
                     self.lastCode = nil
-                }           
+                }
             }
             self.task = task
             task.resume()
         }
     
     private func fetchProfile(token:String) {
-            profileService.fetchProfile(token) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let profile):
-                    self.profile = profile
-                    UIBlockingProgressHUD.dismiss()
-                    self.fetchProfileImage(name: profile.username)
-                  //  self.switchToTabBarController()
-                case .failure:
-                    UIBlockingProgressHUD.dismiss()
-
-                    break
-                }
+        profileService.fetchProfile(token) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let profile):
+                self.profile = profile
+                UIBlockingProgressHUD.dismiss()
+                self.fetchProfileImage(name: profile.username)
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+                break
             }
         }
-
+    }
+    
     private func fetchProfileImage(name: String) {
-    profileImageService.fetchProfileImageURL(username: name) { result in
-    UIBlockingProgressHUD.dismiss()
+        profileImageService.fetchProfileImageURL(username: name) { result in
+            UIBlockingProgressHUD.dismiss()
+        }
     }
-    }
-
 }
 
 
@@ -96,9 +93,9 @@ extension OAuth2Service {
     private func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"
-            + "?client_id=\(AccessKey)"
-            + "&&client_secret=\(SecretKey)"
-            + "&&redirect_uri=\(RedirectURI)"
+            + "?client_id=\(Constants.accessKey)"
+            + "&&client_secret=\(Constants.secretKey)"
+            + "&&redirect_uri=\(Constants.redirectURI)"
             + "&&code=\(code)"
             + "&&grant_type=authorization_code",
             httpMethod: "POST",
@@ -121,15 +118,10 @@ extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
-        baseURL: URL = DefaultBaseURL
-        
-        
-        
+        baseURL: URL = Constants.defaultBaseURL
+          
     ) -> URLRequest {
         var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
-        
-        
-        
         request.httpMethod = httpMethod
         return request
     } }

@@ -13,7 +13,7 @@ final class ProfileViewController: UIViewController {
     private var profileService = ProfileService.shared
     private var token = OAuth2TokenStorage.shared.token
     var profile: Profile?
-    var ava: Ava?
+    //   var ava: Ava?
     let profileImageService = ProfileImageService.shared
     private (set) var profileImageURL: ProfileImageURL?
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -83,9 +83,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in}
-        //ProfileService.shared.fetchProfile(<#T##token: String##String#>, completion: <#T##(Result<Profile, Error>) -> Void#>)
-        profileService.fetchProfile(token!) { result in
+        profileService.fetchProfile(token ?? "") { result in
             UIBlockingProgressHUD.dismiss()
         }
         
@@ -98,8 +96,8 @@ final class ProfileViewController: UIViewController {
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
         
         
-        let imageUrl = URL (string: profileImageService.ava?.avaUrl ?? "")
-        let processor = RoundCornerImageProcessor(cornerRadius: 13)//imageView.frame.width)
+        let imageUrl = URL (string: profileImageService.profileImageURL?.small ?? "")
+        let processor = RoundCornerImageProcessor(cornerRadius: 13)
         imageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder.svg"), options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
         let cache = ImageCache.default
         cache.clearDiskCache()
@@ -160,7 +158,7 @@ final class ProfileViewController: UIViewController {
     
     private func updateAvatar() {
         guard
-            let profileImageURL =  profileImageService.ava?.avaUrl,
+            let profileImageURL =  profileImageService.profileImageURL?.small,
             let url = URL(string: profileImageURL)
         else {return}
         

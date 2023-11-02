@@ -13,7 +13,7 @@ final class ProfileImageService {
     private (set) var avatarURL: String?
     private var task: URLSessionDataTask?
     private (set) var profile: Profile?
-    private (set) var ava: Ava?
+  //  private (set) var ava: Ava?
     private (set) var profileImageURL: ProfileImageURL?
     private let urlSession = URLSession.shared
     private var token = OAuth2TokenStorage.shared.token
@@ -22,7 +22,7 @@ final class ProfileImageService {
     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         task?.cancel()
         
-        guard let request = profileUserRequest(token: token ?? "", username: username) else { return }
+        guard let request = profileUserRequest(token: OAuth2TokenStorage.shared.token ?? "", username: username) else { return }
         task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
 
                 if let error = error {
@@ -41,16 +41,16 @@ final class ProfileImageService {
                     do {
                         let UserResult = try decoder.decode(UserResult.self, from: data)
                         guard let self = self else { return }
-                        let avaURL = UserResult.profile_image.small
-                        self.ava = Ava(avaUrl: avaURL ?? "")
+                        let avaURL = UserResult.profileImage.small //.profileImagee.small
+                        self.profileImageURL = ProfileImageURL(small: avaURL ?? "")
                         
                         NotificationCenter.default
                             .post(
                                 name: ProfileImageService.didChangeNotification,
                                 object: self,
                                 
-                                userInfo: ["URL": self.ava?.avaUrl as Any])
-                        completion(.success(self.ava?.avaUrl ?? ""))
+                                userInfo: ["URL": self.profileImageURL?.small as Any])
+                        completion(.success(self.profileImageURL?.small ?? ""))
                     } catch {
                         completion(.failure(error))
                     }
@@ -63,7 +63,7 @@ final class ProfileImageService {
 }
 
 private func profileUserRequest (token: String, username: String) -> URLRequest? {
-    guard let url = URL(string: "\(DefaultBaseURL)users/\(username)") else { return nil}
+    guard let url = URL(string: "\(Constants.defaultBaseURL)users/\(username)") else { return nil}
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     

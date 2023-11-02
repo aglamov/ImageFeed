@@ -22,16 +22,20 @@ struct ProfileResult: Codable {
 }
 
 struct UserResult: Codable {
-    var profile_image: ProfileImageURL
+    var profileImage: ProfileImageURL
+    
+    enum CodingKeys: String, CodingKey {
+            case profileImage = "profile_image"
+        }
 }
 
 struct ProfileImageURL: Codable {
     var small: String?
 }
 
-struct Ava {
-    var avaUrl: String
-}
+//struct Ava {
+//    var avaUrl: String
+//}
 
 struct Profile {
     var username: String
