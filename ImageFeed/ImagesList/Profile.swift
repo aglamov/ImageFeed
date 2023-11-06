@@ -33,10 +33,6 @@ struct ProfileImageURL: Codable {
     var small: String?
 }
 
-//struct Ava {
-//    var avaUrl: String
-//}
-
 struct Profile {
     var username: String
     var name: String
