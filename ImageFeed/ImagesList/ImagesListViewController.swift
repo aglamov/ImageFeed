@@ -6,19 +6,29 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListViewController: UIViewController {
+    private var photoServiceObserver: NSObjectProtocol?
     
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
     @IBOutlet private var tableView: UITableView!
     private let imagesListService = ImagesListService()
-    
-    private let photosName: [String] = Array(0..<22).map{ "\($0)" }
+    var photos: [Photo] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        photoServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ImagesListService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                updateTableViewAnimated()
+            }
+        imagesListService.fetchPhotosNextPage() { result, error  in }
     }
     
     private lazy var dateFormatter: DateFormatter = {
@@ -28,32 +38,60 @@ final class ImagesListViewController: UIViewController {
         return formatter
     }()
     
-               
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ShowSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let imageName = photosName[indexPath.row]
-            let image = UIImage(named: "\(imageName)_full_size") ?? UIImage(named: imageName)
-            viewController.image = image
+            let photo = photos[indexPath.row]
+            guard let imageURL = URL(string: photo.largeImageURL) else {return}
+            viewController.imageURL = imageURL
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: ImagesListService.didChangeNotification, object: nil)
+    }
+    
 }
+
 extension ImagesListViewController {
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return
+        let imageUrl = photos[indexPath.row].thumbImageURL
+        let url = URL(string: imageUrl)
+        let placeholder = UIImage(named: "Stubs")
+        cell.cellImage.kf.indicatorType = .activity
+        cell.cellImage.kf.setImage(with: url, placeholder: placeholder){[weak self] _ in
+            guard let self = self else { return }
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            cell.cellImage.kf.indicatorType = .none
         }
-        
-        cell.cellImage.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date())
-        
-        let isLiked = indexPath.row % 2 == 1
-        let likeImage = isLiked ? UIImage(named: "Like") : UIImage(named: "noLike")
-        cell.likeButton.setImage(likeImage, for: .normal)
-    }    
+        if let date = imagesListService.photos[indexPath.row].createdAt {
+            cell.dateLabel.text =  dateFormatter.string(from: date)
+        } else {
+            cell.dateLabel.text = "Пусто"
+        }
+        let isLiked = imagesListService.photos[indexPath.row].isLiked == false
+        let like = isLiked ? UIImage(named: "dislike") : UIImage(named: "like")
+        cell.likeButton.setImage(like, for: .normal)
+        cell.selectionStyle = .none
+    }
+    
+    func updateTableViewAnimated() {
+        let oldCount = photos.count
+        let newCount = imagesListService.photos.count
+        photos = imagesListService.photos
+        if oldCount != newCount {
+            tableView.performBatchUpdates {
+                let indexPaths = (oldCount..<newCount).map { i in
+                    IndexPath(row: i, section: 0)
+                }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+            } completion: { _ in }
+        }
+    }
 }
 
 extension ImagesListViewController: UITableViewDelegate {
@@ -62,48 +100,42 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {
-            return 0
-        }
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let imageWidth = image.size.width
-        let scale = imageViewWidth / imageWidth
-        let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
-        return cellHeight
+        let cell = photos[indexPath.row]
+        let imageSize = CGSize(width: cell.size.width, height: cell.size.height)
+        let aspectRatio = imageSize.width / imageSize.height
+        return tableView.frame.width / aspectRatio
     }
 }
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosName.count
+        return photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
-            
-            guard let imageListCell = cell as? ImagesListCell else {
-                return UITableViewCell()
-            }
-            
-            configCell(for: imageListCell, with: indexPath)
-            return imageListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
+        
+        guard let imageListCell = cell as? ImagesListCell else {
+            return UITableViewCell()
         }
+        
+        configCell(for: imageListCell, with: indexPath)
+        return imageListCell
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-          return .lightContent
+        return .lightContent
     }
-
 }
 
 extension ImagesListViewController {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == imagesListService.photos.count {
-           // imagesListService.fetchPhotosNextPage()
+            imagesListService.fetchPhotosNextPage() {result, error in}
         }
     }}
 
-    
+
 
 
 

@@ -8,17 +8,13 @@ final class ImagesListService {
     private var lastLoadedPage: Int?
     private var task: URLSessionDataTask?
     private let perPage = "10"
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd" 
-        return formatter
-    }()
+    private let dateFormatter = ISO8601DateFormatter()
+    
     var nextPage: Int = 1
 
     func fetchPhotosNextPage(completion: @escaping ([Photo]?, Error?) -> Void) {
         assert(Thread.isMainThread)
-        if task != nil { return }
-
+       
         if let lastPage = lastLoadedPage {
             nextPage = lastPage + 1
         } else {
@@ -67,10 +63,13 @@ final class ImagesListService {
                 self?.photos.append(contentsOf: newPhotos)
                 self?.lastLoadedPage =  self?.nextPage
 
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: ImagesListService.didChangeNotification, object: self, userInfo: ["Images": self?.photos as Any])
+                    NotificationCenter.default
+                    .post(
+                        name: ImagesListService.didChangeNotification,
+                        object: self,
+                        userInfo: ["Photos": self?.photos as Any])
                     completion(newPhotos, nil)
-                }
+                
             } catch let error {
                 DispatchQueue.main.async {
                     completion(nil, error)

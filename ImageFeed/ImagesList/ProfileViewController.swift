@@ -13,7 +13,6 @@ final class ProfileViewController: UIViewController {
     private var profileService = ProfileService.shared
     private var token = OAuth2TokenStorage.shared.token
     var profile: Profile?
-    //   var ava: Ava?
     let profileImageService = ProfileImageService.shared
     private (set) var profileImageURL: ProfileImageURL?
     private var profileImageServiceObserver: NSObjectProtocol?
