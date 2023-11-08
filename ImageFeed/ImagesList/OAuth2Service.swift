@@ -12,7 +12,6 @@ final class OAuth2Service {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var profile: Profile?
-  //  private var ava: Ava?
     private let urlSession = URLSession.shared
     
     private var task: URLSessionTask?
@@ -76,7 +75,6 @@ final class OAuth2Service {
     }
 }
 
-
 extension OAuth2Service {
     private func object(
         for request: URLRequest,
@@ -132,6 +130,7 @@ enum NetworkError: Error {
     case urlSessionError
     case noData
     case invalidStatusCode
+    case dataDecodingError
 }
 
 extension URLSession {

@@ -8,8 +8,13 @@
 import UIKit
 import Kingfisher
 
+protocol ImagesListCellDelegate: AnyObject {
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
+}
+
 final class ImagesListViewController: UIViewController {
     private var photoServiceObserver: NSObjectProtocol?
+    weak var delegate: ImagesListCellDelegate?
     
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
@@ -74,7 +79,7 @@ extension ImagesListViewController {
             cell.dateLabel.text = "Пусто"
         }
         let isLiked = imagesListService.photos[indexPath.row].isLiked == false
-        let like = isLiked ? UIImage(named: "dislike") : UIImage(named: "like")
+        let like = isLiked ? UIImage(named: "noLike") : UIImage(named: "Like")
         cell.likeButton.setImage(like, for: .normal)
         cell.selectionStyle = .none
     }
@@ -113,12 +118,13 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
         
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-        
+        imageListCell.delegate = self
         configCell(for: imageListCell, with: indexPath)
         return imageListCell
     }
@@ -135,7 +141,25 @@ extension ImagesListViewController {
         }
     }}
 
-
+extension ImagesListViewController: ImagesListCellDelegate {
+    
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+        UIBlockingProgressHUD.show()
+        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { result in
+            switch result {
+            case .success:
+                self.photos = self.imagesListService.photos
+                cell.establishLike(isLiked: self.photos[indexPath.row].isLiked)
+                UIBlockingProgressHUD.dismiss()
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+            }
+        }
+    }
+    
+}
 
 
 

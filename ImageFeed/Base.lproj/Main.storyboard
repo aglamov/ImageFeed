@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1BV-lN-iFP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1BV-lN-iFP">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -68,6 +68,9 @@
                                                     <rect key="frame" x="333" y="3" width="44" height="44"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="Like"/>
+                                                    <connections>
+                                                        <action selector="likeButtonClicked" destination="M69-DS-u2I" eventType="touchUpInside" id="TgY-QS-58b"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Марта 2023 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DUK-OI-vfQ" userLabel="DateLabel">
                                                     <rect key="frame" x="24" y="247" width="96" height="16"/>
@@ -92,7 +95,7 @@
                                         <connections>
                                             <outlet property="cellImage" destination="G6N-Qv-gGQ" id="mdk-0l-x99"/>
                                             <outlet property="dateLabel" destination="DUK-OI-vfQ" id="vfg-jC-tF2"/>
-                                            <outlet property="likeButton" destination="lPR-hd-pCI" id="NyV-4G-nYX"/>
+                                            <outlet property="likeButton" destination="lPR-hd-pCI" id="ACT-Tt-raj"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
