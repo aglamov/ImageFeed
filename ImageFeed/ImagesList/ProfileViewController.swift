@@ -9,7 +9,9 @@ import UIKit
 import Kingfisher
 
 final class ProfileViewController: UIViewController {
-    @objc private func didTapButton(){}
+    @objc private func didTapButton(){
+        showLogoutAlert()
+    }
     private var profileService = ProfileService.shared
     private var token = OAuth2TokenStorage.shared.token
     var profile: Profile?
@@ -191,4 +193,26 @@ final class ProfileViewController: UIViewController {
         }
     }
     
+    private func showLogoutAlert() {
+        let alert = UIAlertController(
+            title: "Выход",
+            message: "Выйти из Вашего профиля?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] action in
+            guard let self = self else { return }
+            self.logout()
+        }))
+        alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func logout() {
+        OAuth2TokenStorage.clean()
+        OAuth2TokenStorage.shared.token = nil
+        tabBarController?.dismiss(animated: true)
+        guard let window = UIApplication.shared.windows.first else {
+            fatalError("Invalid Configuration") }
+        window.rootViewController = SplashViewController()
+    }
 }
