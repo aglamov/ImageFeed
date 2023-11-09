@@ -7,8 +7,11 @@
 
 import UIKit
 import Kingfisher
+import SwiftKeychainWrapper
 
 final class ProfileViewController: UIViewController {
+    
+    let splashViewController = SplashViewController()
     @objc private func didTapButton(){
         showLogoutAlert()
     }
@@ -195,8 +198,8 @@ final class ProfileViewController: UIViewController {
     
     private func showLogoutAlert() {
         let alert = UIAlertController(
-            title: "Выход",
-            message: "Выйти из Вашего профиля?",
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
             preferredStyle: .alert
         )
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] action in
@@ -207,12 +210,18 @@ final class ProfileViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func logout() {
-        OAuth2TokenStorage.clean()
-        OAuth2TokenStorage.shared.token = nil
-        tabBarController?.dismiss(animated: true)
-        guard let window = UIApplication.shared.windows.first else {
-            fatalError("Invalid Configuration") }
-        window.rootViewController = SplashViewController()
+    func logout() {
+        DispatchQueue.main.async {
+            OAuth2TokenStorage.shared.token = nil
+            WebViewViewController.clean()
+            if let window = UIApplication.shared.windows.first {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                if let mainViewController = storyboard.instantiateInitialViewController() {
+                    window.rootViewController = mainViewController
+                }
+            }
+        }
     }
+
+
 }

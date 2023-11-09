@@ -14,14 +14,15 @@ final class ImagesListService {
     
     func fetchPhotosNextPage(completion: @escaping ([Photo]?, Error?) -> Void) {
         assert(Thread.isMainThread)
-        
+        if task != nil { return }
         if let lastPage = lastLoadedPage {
             nextPage = lastPage + 1
         } else {
             nextPage = 1
         }
+        guard let token = OAuth2TokenStorage.shared.token else { completion(nil, Error?.self as? Error); return  }
         
-        guard let request = listImagesRequest(token: OAuth2TokenStorage.shared.token ?? "", page: String(nextPage), perPage: perPage) else { return }
+        guard let request = listImagesRequest(token: token, page: String(nextPage), perPage: perPage) else { return }
         
         task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             if let error = error {
@@ -101,6 +102,7 @@ final class ImagesListService {
         self.photos[index] = newPhoto
     
         guard let request = likeImagesRequest(token: OAuth2TokenStorage.shared.token ?? "", photoID: photoId, likeDislike: isLike) else {
+            completion (.failure(NetworkError.noData))
             return
         }
         
@@ -177,7 +179,7 @@ private func listImagesRequest(token: String, page: String, perPage: String) -> 
 }
 
 private func likeImagesRequest(token: String, photoID: String, likeDislike: Bool) -> URLRequest? {
-    guard let baseURL = URL(string: "\("Constants.defaultBaseURL)")") else { return nil }
+    guard let baseURL = URL(string: "\("Constants.defaultBaseURL")") else { return nil }
     let endpoint: String
     let httpMethod: String
     

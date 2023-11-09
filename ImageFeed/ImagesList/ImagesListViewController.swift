@@ -67,6 +67,7 @@ extension ImagesListViewController {
         let imageUrl = photos[indexPath.row].thumbImageURL
         let url = URL(string: imageUrl)
         let placeholder = UIImage(named: "Stubs")
+        cell.delegate = self
         cell.cellImage.kf.indicatorType = .activity
         cell.cellImage.kf.setImage(with: url, placeholder: placeholder){[weak self] _ in
             guard let self = self else { return }
@@ -76,7 +77,7 @@ extension ImagesListViewController {
         if let date = imagesListService.photos[indexPath.row].createdAt {
             cell.dateLabel.text =  dateFormatter.string(from: date)
         } else {
-            cell.dateLabel.text = "Пусто"
+            cell.dateLabel.text = ""
         }
         let isLiked = imagesListService.photos[indexPath.row].isLiked == false
         let like = isLiked ? UIImage(named: "noLike") : UIImage(named: "Like")
@@ -152,6 +153,8 @@ extension ImagesListViewController: ImagesListCellDelegate {
             case .success:
                 self.photos = self.imagesListService.photos
                 cell.establishLike(isLiked: self.photos[indexPath.row].isLiked)
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+
                 UIBlockingProgressHUD.dismiss()
             case .failure:
                 UIBlockingProgressHUD.dismiss()
