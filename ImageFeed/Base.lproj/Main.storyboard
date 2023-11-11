@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1BV-lN-iFP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="APd-18-thC">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -217,68 +217,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" contentMode="center" semanticContentAttribute="playback" bounces="NO" delaysContentTouches="NO" canCancelContentTouches="NO" maximumZoomScale="12" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSm-La-6xw">
+                            <scrollView clipsSubviews="YES" contentMode="center" semanticContentAttribute="playback" fixedFrame="YES" bounces="NO" delaysContentTouches="NO" canCancelContentTouches="NO" maximumZoomScale="12" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSm-La-6xw">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="EgF-Vb-1Xr">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                    </imageView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="EgF-Vb-1Xr" secondAttribute="trailing" id="71Y-ZJ-CEg"/>
-                                    <constraint firstAttribute="bottom" secondItem="EgF-Vb-1Xr" secondAttribute="bottom" id="FmV-WV-lmg"/>
-                                    <constraint firstItem="2PD-2M-cfq" firstAttribute="bottom" secondItem="EgF-Vb-1Xr" secondAttribute="bottom" id="HWV-YT-Aug"/>
-                                    <constraint firstItem="EgF-Vb-1Xr" firstAttribute="top" secondItem="y99-4F-fqc" secondAttribute="top" id="N39-Nc-9g9"/>
-                                    <constraint firstItem="EgF-Vb-1Xr" firstAttribute="leading" secondItem="2PD-2M-cfq" secondAttribute="leading" id="WKJ-yL-enz"/>
-                                    <constraint firstItem="2PD-2M-cfq" firstAttribute="trailing" secondItem="EgF-Vb-1Xr" secondAttribute="trailing" id="bEA-33-5CZ"/>
-                                    <constraint firstItem="EgF-Vb-1Xr" firstAttribute="top" secondItem="2PD-2M-cfq" secondAttribute="top" id="jEj-CL-uu5"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="y99-4F-fqc"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="2PD-2M-cfq"/>
                                 <connections>
                                     <outlet property="delegate" destination="V2g-Qs-4Jq" id="1FC-Gx-ftN"/>
                                 </connections>
                             </scrollView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfb-ma-bf3">
-                                <rect key="frame" x="8" y="8" width="48" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="48" id="Hnt-Cg-nXj"/>
-                                    <constraint firstAttribute="height" constant="48" id="XXc-fG-KHp"/>
-                                </constraints>
-                                <color key="tintColor" name="ypWhite"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="Backward"/>
-                                <connections>
-                                    <action selector="didTapBackButton" destination="V2g-Qs-4Jq" eventType="touchUpInside" id="FYh-Ub-mtf"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b36-DL-Li8" userLabel="Share">
-                                <rect key="frame" x="156.66666666666666" y="737" width="79.666666666666657" height="64"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="Sharing" title=" "/>
-                                <connections>
-                                    <action selector="didTapShareButton:" destination="V2g-Qs-4Jq" eventType="touchUpInside" id="urH-A7-4sf"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vcD-3U-uAd"/>
                         <color key="backgroundColor" name="ypBlack"/>
-                        <constraints>
-                            <constraint firstItem="bSm-La-6xw" firstAttribute="leading" secondItem="0VL-Ql-cqA" secondAttribute="leading" id="2ge-Bh-uTW"/>
-                            <constraint firstAttribute="bottom" secondItem="bSm-La-6xw" secondAttribute="bottom" id="AKI-du-17H"/>
-                            <constraint firstAttribute="trailing" secondItem="bSm-La-6xw" secondAttribute="trailing" id="LmM-5r-WUq"/>
-                            <constraint firstItem="vcD-3U-uAd" firstAttribute="bottom" secondItem="b36-DL-Li8" secondAttribute="bottom" constant="51" id="NF7-Cs-6GN"/>
-                            <constraint firstItem="bSm-La-6xw" firstAttribute="top" secondItem="0VL-Ql-cqA" secondAttribute="top" id="VPL-dp-Xdt"/>
-                            <constraint firstItem="nfb-ma-bf3" firstAttribute="top" secondItem="vcD-3U-uAd" secondAttribute="top" constant="8" id="Z2s-uS-m9Y"/>
-                            <constraint firstItem="b36-DL-Li8" firstAttribute="centerX" secondItem="bSm-La-6xw" secondAttribute="centerX" id="sYO-4P-Gjt"/>
-                            <constraint firstItem="nfb-ma-bf3" firstAttribute="leading" secondItem="vcD-3U-uAd" secondAttribute="leading" constant="8" id="u1C-Nm-asl"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rXD-z4-Spr"/>
                     <connections>
                         <outlet property="scrollView" destination="bSm-La-6xw" id="2OU-Ud-6F7"/>
-                        <outlet property="shareButton" destination="b36-DL-Li8" id="U2s-e4-CX4"/>
-                        <outlet property="singleImage" destination="EgF-Vb-1Xr" id="h9e-Ha-J8B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ev-5c-Fof" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -288,9 +242,7 @@
     </scenes>
     <resources>
         <image name="0" width="200" height="132"/>
-        <image name="Backward" width="24" height="24"/>
         <image name="Like" width="44" height="44"/>
-        <image name="Sharing" width="51" height="50"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="31" height="30"/>
         <namedColor name="ypBlack">

@@ -9,25 +9,29 @@ import UIKit
 import Kingfisher
 
 final class SingleImageViewController: UIViewController {
+    
+    private var singleImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     var imageURL: URL! {
         didSet {
-            guard isViewLoaded else {return}
-
+            guard isViewLoaded else { return }
+            setImage()
         }
     }
-    
-    @IBOutlet private weak var shareButton: UIButton!
-    
-    @IBOutlet private weak var singleImage: UIImageView!
     
     @IBOutlet private weak var scrollView: UIScrollView!
     
     
-    @IBAction private func didTapBackButton() {
+    @objc private func didTapBackButton() {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func didTapShareButton(_ sender: Any) {
+    @objc func didTapShareButton(_ sender: Any) {
         let share = UIActivityViewController(
             activityItems: [singleImage as Any],
             applicationActivities: nil
@@ -35,17 +39,55 @@ final class SingleImageViewController: UIViewController {
         present(share, animated: true, completion: nil)
     }
     
+    private func addBackButton () -> UIButton {
+        lazy var backButton = UIButton.systemButton(
+            with: UIImage(imageLiteralResourceName: "Backward"),
+            target: self,
+            action: #selector(Self.didTapBackButton)
+            
+        )
+        backButton.tintColor = UIColor(named: "ypBlue")
+        backButton.setTitle("Назад", for: .normal)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        return backButton
+    }
     
+    private func addShareButton() -> UIButton {
+        let shareButton = UIButton(type: .system)
+        shareButton.setBackgroundImage(UIImage(imageLiteralResourceName: "Share"), for: .normal)
+        shareButton.tintColor = UIColor.white
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.addTarget(self, action: #selector(self.didTapShareButton), for: .touchUpInside)
+        return shareButton
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(singleImage)
+        singleImage.tintColor = .gray
+        singleImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        singleImage.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        singleImage.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        singleImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        let shareButton = addShareButton()
+        view.addSubview(shareButton)
+        shareButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        shareButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -51).isActive = true
+           
+        let backButton = addBackButton()
+        view.addSubview(backButton)
+        backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 9).isActive = true
+        backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9).isActive = true
         setupScrollView()
         setImage()
     }
 
     private func setupScrollView() {
         scrollView.delegate = self
-        scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 3.0
+        scrollView.minimumZoomScale = 0.1
+        scrollView.maximumZoomScale = 1.25
     }
     
     private func setImage() {
@@ -71,8 +113,6 @@ final class SingleImageViewController: UIViewController {
         let widthScale = scrollViewSize.width / imageViewSize.width
         let heightScale = scrollViewSize.height / imageViewSize.height
         let minScale = max(widthScale, heightScale)
-
-        scrollView.minimumZoomScale = minScale
         scrollView.zoomScale = minScale
         scrollView.contentSize = imageViewSize
         centerScrollViewContents()
