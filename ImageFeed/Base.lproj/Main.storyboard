@@ -216,24 +216,10 @@
                     <view key="view" contentMode="scaleToFill" id="0VL-Ql-cqA">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" contentMode="center" semanticContentAttribute="playback" fixedFrame="YES" bounces="NO" delaysContentTouches="NO" canCancelContentTouches="NO" maximumZoomScale="12" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bSm-La-6xw">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="y99-4F-fqc"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="2PD-2M-cfq"/>
-                                <connections>
-                                    <outlet property="delegate" destination="V2g-Qs-4Jq" id="1FC-Gx-ftN"/>
-                                </connections>
-                            </scrollView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vcD-3U-uAd"/>
                         <color key="backgroundColor" name="ypBlack"/>
                     </view>
                     <navigationItem key="navigationItem" id="rXD-z4-Spr"/>
-                    <connections>
-                        <outlet property="scrollView" destination="bSm-La-6xw" id="2OU-Ud-6F7"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ev-5c-Fof" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
