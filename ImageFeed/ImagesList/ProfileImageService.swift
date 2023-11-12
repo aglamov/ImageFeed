@@ -13,7 +13,6 @@ final class ProfileImageService {
     private (set) var avatarURL: String?
     private var task: URLSessionDataTask?
     private (set) var profile: Profile?
-  //  private (set) var ava: Ava?
     private (set) var profileImageURL: ProfileImageURL?
     private let urlSession = URLSession.shared
     private var token = OAuth2TokenStorage.shared.token
@@ -39,9 +38,9 @@ final class ProfileImageService {
                 if let data = data {
                     let decoder = JSONDecoder()
                     do {
-                        let UserResult = try decoder.decode(UserResult.self, from: data)
+                        let userResult = try decoder.decode(UserResult.self, from: data)
                         guard let self = self else { return }
-                        let avaURL = UserResult.profileImage.small //.profileImagee.small
+                        let avaURL = userResult.profileImage.small
                         self.profileImageURL = ProfileImageURL(small: avaURL ?? "")
                         
                         NotificationCenter.default

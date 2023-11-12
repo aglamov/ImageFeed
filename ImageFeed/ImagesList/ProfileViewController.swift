@@ -7,13 +7,17 @@
 
 import UIKit
 import Kingfisher
+import SwiftKeychainWrapper
 
 final class ProfileViewController: UIViewController {
-    @objc private func didTapButton(){}
+    
+    let splashViewController = SplashViewController()
+    @objc private func didTapButton(){
+        showLogoutAlert()
+    }
     private var profileService = ProfileService.shared
     private var token = OAuth2TokenStorage.shared.token
     var profile: Profile?
-    //   var ava: Ava?
     let profileImageService = ProfileImageService.shared
     private (set) var profileImageURL: ProfileImageURL?
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -192,4 +196,32 @@ final class ProfileViewController: UIViewController {
         }
     }
     
+    private func showLogoutAlert() {
+        let alert = UIAlertController(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] action in
+            guard let self = self else { return }
+            self.logout()
+        }))
+        alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func logout() {
+        DispatchQueue.main.async {
+            OAuth2TokenStorage.shared.token = nil
+            WebViewViewController.clean()
+            if let window = UIApplication.shared.windows.first {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                if let mainViewController = storyboard.instantiateInitialViewController() {
+                    window.rootViewController = mainViewController
+                }
+            }
+        }
+    }
+
+
 }
