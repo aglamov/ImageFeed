@@ -180,11 +180,11 @@ private func listImagesRequest(token: String, page: String, perPage: String) -> 
 }
 
 private func likeImagesRequest(token: String, photoID: String, likeDislike: Bool) -> URLRequest? {
-    guard let baseURL = URL(string: "\("Constants.defaultBaseURL")") else { return nil }
+    guard let baseURL = URL(string: "\(Constants.defaultBaseURL)") else { return nil }
     let endpoint: String
     let httpMethod: String
     
-    if likeDislike {
+    if !likeDislike {
         endpoint = "/photos/\(photoID)/like"
         httpMethod = "POST"
     } else {

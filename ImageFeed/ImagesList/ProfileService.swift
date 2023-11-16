@@ -22,44 +22,42 @@ final class ProfileService {
         
         guard let request = profileRequest(token: token) else { return }
         task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            DispatchQueue.main.async {
-                if let error = error {
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion(.failure(NetworkError.invalidStatusCode))
+                return
+            }
+            
+            if let data = data {
+                let decoder = JSONDecoder()
+                do {
+                    let profileResult = try decoder.decode(ProfileResult.self, from: data)
+                    guard let self = self else { return }
+                    let username = profileResult.username
+                    let loginName = "@" + profileResult.username
+                    let name = "\(profileResult.firstName ?? "") \(profileResult.lastName ?? "")"
+                    let bio = profileResult.bio ?? ""
+                    self.profile = Profile(username: username, name: name, loginName: loginName, bio: bio)
+                    
+                    NotificationCenter.default
+                        .post(
+                            name: ProfileService.didChangeNotification,
+                            object: self,
+                            userInfo: ["user": self.profile?.name as Any, "loginName": self.profile?.loginName as Any, "bio": self.profile?.bio as Any])
+                    
+                    ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in}
+                    
+                    completion(.success(self.profile!))
+                } catch {
                     completion(.failure(error))
-                    return
                 }
-                
-                guard let httpResponse = response as? HTTPURLResponse,
-                      (200..<300).contains(httpResponse.statusCode) else {
-                    completion(.failure(NetworkError.invalidStatusCode))
-                    return
-                }
-                
-                if let data = data {
-                    let decoder = JSONDecoder()
-                    do {
-                        let profileResult = try decoder.decode(ProfileResult.self, from: data)
-                        guard let self = self else { return }
-                        let username = profileResult.username
-                        let loginName = "@" + profileResult.username
-                        let name = "\(profileResult.firstName ?? "") \(profileResult.lastName ?? "")"
-                        let bio = profileResult.bio ?? ""
-                        self.profile = Profile(username: username, name: name, loginName: loginName, bio: bio)
-                        
-                        NotificationCenter.default
-                            .post(
-                                name: ProfileService.didChangeNotification,
-                                object: self,
-                                userInfo: ["user": self.profile?.name as Any, "loginName": self.profile?.loginName as Any, "bio": self.profile?.bio as Any])
-                        
-                        ProfileImageService.shared.fetchProfileImageURL(username: username) { _ in}
-                       
-                        completion(.success(self.profile!))
-                    } catch {
-                        completion(.failure(error))
-                    }
-                } else {
-                    completion(.failure(NetworkError.noData))
-                }
+            } else {
+                completion(.failure(NetworkError.noData))
             }
         }
         task!.resume()
