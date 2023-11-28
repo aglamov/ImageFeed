@@ -9,9 +9,17 @@ import UIKit
 import Kingfisher
 import SwiftKeychainWrapper
 
-final class ProfileViewController: UIViewController {
+public protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? {set get}
+    func updateAvatar(url: URL)
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     
+    var presenter: ProfileViewPresenterProtocol?
+    let profilePresenter = ProfilePresenter()
     let splashViewController = SplashViewController()
+    let profileViewControllerProtocol = ProfileViewControllerProtocol.self
     @objc private func didTapButton(){
         showLogoutAlert()
     }
@@ -90,7 +98,8 @@ final class ProfileViewController: UIViewController {
         profileService.fetchProfile(token ?? "") { result in
             UIBlockingProgressHUD.dismiss()
         }
-        
+        presenter = profilePresenter
+        presenter?.view = self
         view.addSubview(imageView)
         imageView.tintColor = .gray
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -98,13 +107,6 @@ final class ProfileViewController: UIViewController {
         imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        
-        
-        let imageUrl = URL (string: profileImageService.profileImageURL?.small ?? "")
-        let processor = RoundCornerImageProcessor(cornerRadius: 13)
-        imageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholder.svg"), options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
-        let cache = ImageCache.default
-        cache.clearDiskCache()
         
         var text = profileService.profile?.name
         let labelName = addLabelName(text: text ?? "Ошибка получения данных")
@@ -137,8 +139,8 @@ final class ProfileViewController: UIViewController {
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
+                guard self != nil else { return }
+                self!.presenter?.viewDidLoad()
             }
         
         profileServiceObserver = NotificationCenter.default
@@ -150,22 +152,16 @@ final class ProfileViewController: UIViewController {
                 guard let self = self else { return }
                 self.updateInfo()
             }
-        updateAvatar()
+        presenter?.viewDidLoad()
         updateInfo()
         
         let logoutButton = addButtonLogout()
         view.addSubview(logoutButton)
         logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
         logoutButton.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
-        
     }
     
-    private func updateAvatar() {
-        guard
-            let profileImageURL =  profileImageService.profileImageURL?.small,
-            let url = URL(string: profileImageURL)
-        else {return}
-        
+    internal func updateAvatar(url: URL) {
         let processor = RoundCornerImageProcessor(cornerRadius: imageView.frame.width)
         imageView.kf.indicatorType = .activity
         imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder.svg"), options: [.processor(processor),.cacheSerializer(FormatIndicatedCacheSerializer.png)])
@@ -204,24 +200,10 @@ final class ProfileViewController: UIViewController {
         )
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] action in
             guard let self = self else { return }
-            self.logout()
+            //self.logout()
+            presenter?.logout()
         }))
         alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-    
-    func logout() {
-        DispatchQueue.main.async {
-            OAuth2TokenStorage.shared.token = nil
-            WebViewViewController.clean()
-            if let window = UIApplication.shared.windows.first {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                if let mainViewController = storyboard.instantiateInitialViewController() {
-                    window.rootViewController = mainViewController
-                }
-            }
-        }
-    }
-
-
 }

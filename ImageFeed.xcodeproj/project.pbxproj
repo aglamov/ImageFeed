@@ -35,6 +35,7 @@
 		75C1953B2B0F374C0094D0A6 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C1953A2B0F374C0094D0A6 /* WebViewPresenter.swift */; };
 		75C1953D2B0F416B0094D0A6 /* WebViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C1953C2B0F416B0094D0A6 /* WebViewTests.swift */; };
 		75C1953F2B0F51F40094D0A6 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C1953E2B0F51F40094D0A6 /* AuthHelper.swift */; };
+		75C1954B2B128A4E0094D0A6 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C1954A2B128A4E0094D0A6 /* ProfilePresenter.swift */; };
 		75F86FAD2A6332A9000B6318 /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F86FAC2A6332A9000B6318 /* OAuth2TokenStorage.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		75C1953A2B0F374C0094D0A6 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		75C1953C2B0F416B0094D0A6 /* WebViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTests.swift; sourceTree = "<group>"; };
 		75C1953E2B0F51F40094D0A6 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
+		75C1954A2B128A4E0094D0A6 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		75F86FAC2A6332A9000B6318 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,6 +151,7 @@
 				75A302DF2A0C3C76004B384B /* ImagesListCell.swift */,
 				7540AC9F2AF6B69C008D80A0 /* ImagesListService.swift */,
 				7580B4BC2A15710100092EDA /* ProfileViewController.swift */,
+				75C1954A2B128A4E0094D0A6 /* ProfilePresenter.swift */,
 				7580B4BE2A1AB49600092EDA /* SingleImageViewController.swift */,
 				759861062A311F5F00401067 /* AuthConfiguration.swift */,
 				75C1953E2B0F51F40094D0A6 /* AuthHelper.swift */,
@@ -279,6 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C1954B2B128A4E0094D0A6 /* ProfilePresenter.swift in Sources */,
 				7540AC9E2AF43EEE008D80A0 /* Photo.swift in Sources */,
 				75F86FAD2A6332A9000B6318 /* OAuth2TokenStorage.swift in Sources */,
 				752AED432A0305A800D728B9 /* ImagesListViewController.swift in Sources */,
