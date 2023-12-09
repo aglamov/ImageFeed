@@ -1,31 +1,23 @@
-//
-//  ImageFeedUITests.swift
-//  ImageFeedUITests
-//
-//  Created by Рамиль Аглямов on 29.11.2023.
-//
 import XCTest
 
-final class ImageFeedUITests: XCTestCase {
+final class ImageFeed_8_sprintUITests: XCTestCase {
     enum Constraints {
         static let email = "aglamov@yandex.ru"
         static let password = "84295221"
-        static let name = "Ramil Aglamov"
+        static let name = "Ramil Aglyamov"
         static let login = "@aglamov"
     }
-    //переменная приложения
+    
     private let app = XCUIApplication()
     
     override func setUpWithError() throws {
-        //стопнет тесты, если что-то не так
         continueAfterFailure = false
         app.launchArguments = ["testMode"]
-        app.launch() //запускаем прилу
+        app.launch()
     }
     
     func testAuth() throws {
         XCTAssertTrue(app.buttons["Authenticate"].waitForExistence(timeout: 5))
-        //нажать на кнопку авторизации
         app.buttons["Authenticate"].tap()
         
         let webView = app.webViews["UnsplashWebView"]
@@ -52,7 +44,6 @@ final class ImageFeedUITests: XCTestCase {
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         
         XCTAssertTrue(cell.waitForExistence(timeout: 5))
-        
     }
 
     
@@ -88,6 +79,7 @@ final class ImageFeedUITests: XCTestCase {
         XCTAssertTrue(app.tabBars.buttons.element(boundBy: 1).waitForExistence(timeout: 3))
         app.tabBars.buttons.element(boundBy: 1).tap()
 
+//        XCTAssertTrue(app.buttons["LogoutButton"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts[Constraints.name].exists)
         XCTAssertTrue(app.staticTexts[Constraints.login].exists)
 

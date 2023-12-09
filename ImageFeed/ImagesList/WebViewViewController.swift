@@ -65,6 +65,7 @@ final class WebViewViewController : UIViewController, WebViewViewControllerProto
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         webView.navigationDelegate = self
+        webView.accessibilityIdentifier = "UnsplashWebView"
         
         presenter?.didUpdateProgressValue(webView.estimatedProgress)
         let backButton = addBackButton()
