@@ -2,10 +2,10 @@ import XCTest
 
 final class ImageFeed_8_sprintUITests: XCTestCase {
     enum Constraints {
-        static let email = "aglamov@yandex.ru"
-        static let password = "84295221"
+        static let email = " "
+        static let password = " "
         static let name = "Ramil Aglyamov"
-        static let login = "@aglamov"
+        static let loginName = "@aglamov"
     }
     
     private let app = XCUIApplication()
@@ -58,16 +58,16 @@ final class ImageFeed_8_sprintUITests: XCTestCase {
 
         let cellTwo = tableQuery.children(matching: .cell).element(boundBy: 1)
         XCTAssertTrue(cellTwo.waitForExistence(timeout: 3))
-        XCTAssertTrue(cellTwo.buttons["LikeButton"].waitForExistence(timeout: 1))
-        cellTwo.buttons["LikeButton"].tap()
+        XCTAssertTrue(cellTwo.buttons["like"].waitForExistence(timeout: 1))
+        cellTwo.buttons["like"].tap()
         sleep(3)
-        cellTwo.buttons["LikeButton"].tap()
+        cellTwo.buttons["like"].tap()
         sleep(3)
 
         cellTwo.tap()
         sleep(3)
 
-        let image = app.scrollViews.images.element(boundBy: 0)
+        let image = app.images.element(boundBy: 0)
         image.pinch(withScale: 3, velocity: 1)
         image.pinch(withScale: 0.5, velocity: -1)
 
@@ -79,14 +79,13 @@ final class ImageFeed_8_sprintUITests: XCTestCase {
         XCTAssertTrue(app.tabBars.buttons.element(boundBy: 1).waitForExistence(timeout: 3))
         app.tabBars.buttons.element(boundBy: 1).tap()
 
-//        XCTAssertTrue(app.buttons["LogoutButton"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts[Constraints.name].exists)
-        XCTAssertTrue(app.staticTexts[Constraints.login].exists)
+        XCTAssertTrue(app.staticTexts[Constraints.loginName].exists)
 
         app.buttons["LogoutButton"].tap()
 
-        XCTAssertTrue(app.alerts["Выход"].waitForExistence(timeout: 3))
-        app.alerts["Выход"].buttons["Да"].tap()
+        XCTAssertTrue(app.alerts["Пока, пока!"].waitForExistence(timeout: 3))
+        app.alerts["Пока, пока!"].buttons["Да"].tap()
 
         XCTAssertTrue(app.buttons["Authenticate"].waitForExistence(timeout: 3))
     }

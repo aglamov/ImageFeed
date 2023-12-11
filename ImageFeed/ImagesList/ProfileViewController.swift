@@ -159,6 +159,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         view.addSubview(logoutButton)
         logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24).isActive = true
         logoutButton.centerYAnchor.constraint(equalTo: imageView.centerYAnchor).isActive = true
+        logoutButton.accessibilityIdentifier = "LogoutButton"
     }
     
     internal func updateAvatar(url: URL) {
@@ -200,7 +201,6 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         )
         alert.addAction(UIAlertAction(title: "Да", style: .default, handler: { [weak self] action in
             guard let self = self else { return }
-            //self.logout()
             presenter?.logout()
         }))
         alert.addAction(UIAlertAction(title: "Нет", style: .default, handler: nil))
