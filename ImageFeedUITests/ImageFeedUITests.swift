@@ -2,8 +2,8 @@ import XCTest
 
 final class ImageFeed_8_sprintUITests: XCTestCase {
     enum Constraints {
-        static let email = "aglamov@yandex.ru"
-        static let password = "84295221"
+        static let email = ""
+        static let password = ""
         static let name = "Ramil Aglyamov"
         static let loginName = "@aglamov"
     }
