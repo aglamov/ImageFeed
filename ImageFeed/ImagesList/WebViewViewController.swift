@@ -56,6 +56,7 @@ final class WebViewViewController : UIViewController, WebViewViewControllerProto
         presenter?.didUpdateProgressValue(webView.estimatedProgress)
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.backgroundColor = .white
+        webView.accessibilityIdentifier = "UnsplashWebView"
         view.addSubview(webView)
         
         NSLayoutConstraint.activate([
@@ -65,7 +66,7 @@ final class WebViewViewController : UIViewController, WebViewViewControllerProto
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         webView.navigationDelegate = self
-        webView.accessibilityIdentifier = "UnsplashWebView"
+        
         
         presenter?.didUpdateProgressValue(webView.estimatedProgress)
         let backButton = addBackButton()
