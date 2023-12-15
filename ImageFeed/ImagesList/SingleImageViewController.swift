@@ -54,7 +54,7 @@ final class SingleImageViewController: UIViewController {
     
     private func addShareButton() -> UIButton {
         let shareButton = UIButton(type: .system)
-        shareButton.setBackgroundImage(UIImage(imageLiteralResourceName: "Share"), for: .normal)
+        shareButton.setBackgroundImage(UIImage(imageLiteralResourceName: "ShareBottom"), for: .normal)
         shareButton.tintColor = UIColor.white
         shareButton.translatesAutoresizingMaskIntoConstraints = false
         shareButton.addTarget(self, action: #selector(self.didTapShareButton), for: .touchUpInside)
