@@ -25,6 +25,10 @@ final class AuthViewController : UIViewController {
             guard
                 let webViewViewController = segue.destination as? WebViewViewController
             else { fatalError("Failed to prepare for \(showWebViewSigueIdentifier)") }
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+            webViewViewController.presenter = webViewPresenter
+            webViewPresenter.view = webViewViewController
             webViewViewController.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
@@ -76,6 +80,7 @@ final class AuthViewController : UIViewController {
         loginButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -124).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         loginButton.isEnabled = true
+        loginButton.accessibilityIdentifier = "Authenticate"
     }
     
 }

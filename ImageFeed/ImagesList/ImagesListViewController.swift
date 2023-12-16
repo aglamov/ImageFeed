@@ -82,6 +82,7 @@ extension ImagesListViewController {
         let isLiked = imagesListService.photos[indexPath.row].isLiked == false
         let like = isLiked ? UIImage(named: "noLike") : UIImage(named: "Like")
         cell.likeButton.setImage(like, for: .normal)
+        cell.likeButton.accessibilityIdentifier = "like"
         cell.selectionStyle = .none
     }
     

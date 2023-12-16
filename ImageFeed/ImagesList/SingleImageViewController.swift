@@ -54,7 +54,7 @@ final class SingleImageViewController: UIViewController {
     
     private func addShareButton() -> UIButton {
         let shareButton = UIButton(type: .system)
-        shareButton.setBackgroundImage(UIImage(imageLiteralResourceName: "Share"), for: .normal)
+        shareButton.setBackgroundImage(UIImage(imageLiteralResourceName: "ShareBottom"), for: .normal)
         shareButton.tintColor = UIColor.white
         shareButton.translatesAutoresizingMaskIntoConstraints = false
         shareButton.addTarget(self, action: #selector(self.didTapShareButton), for: .touchUpInside)
@@ -64,18 +64,18 @@ final class SingleImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        scrollView = UIScrollView()
+        scrollView.delegate = self
+        scrollView.frame = view.bounds
+        scrollView.contentSize = singleImage.frame.size
+        view.addSubview(scrollView)
+        
         view.addSubview(singleImage)
         singleImage.tintColor = .gray
         singleImage.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         singleImage.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         singleImage.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         singleImage.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        scrollView = UIScrollView()
-        scrollView.delegate = self
-        scrollView.frame = view.bounds
-        scrollView.contentSize = singleImage.frame.size
-        view.addSubview(scrollView)
         
         let shareButton = addShareButton()
         view.addSubview(shareButton)
@@ -86,6 +86,7 @@ final class SingleImageViewController: UIViewController {
         view.addSubview(backButton)
         backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 9).isActive = true
         backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 9).isActive = true
+        backButton.accessibilityIdentifier = "BackButton"
      
         setImage()
     }
